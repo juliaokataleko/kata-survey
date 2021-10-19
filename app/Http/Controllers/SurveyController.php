@@ -67,16 +67,6 @@ class SurveyController extends Controller
             // save the option
             $option = SurveyOption::create($option);
 
-            // adicionar respostas aleatórias...
-            $values = rand(1, 5);
-
-            for ($i=0; $i < $values; $i++) { 
-                Answer::create([
-                    'user_id' => auth()->id(),
-                    'survey_id' => $survey->id,
-                    'option_id' => $option->id,
-                ]);
-            }
         }
     }
 
@@ -139,17 +129,7 @@ class SurveyController extends Controller
                 $dataOption['number'] = $option['number'];
                 $option = SurveyOption::create($dataOption);
             }
-  
-            // adicionar respostas aleatórias...
-            $values = rand(1, 5);
 
-            for ($i = 0; $i < $values; $i++) {
-                Answer::create([
-                    'user_id' => auth()->id(),
-                    'survey_id' => $survey->id,
-                    'option_id' => $option->id,
-                ]);
-            }
         }
     }
 

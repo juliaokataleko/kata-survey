@@ -3,6 +3,8 @@
 use App\Http\Controllers\PlaySurveyController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\SurveyOptionController;
+use App\Http\Resources\SurveyOptionResource;
+use App\Models\SurveyOption;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +32,10 @@ Route::group(
 );
 
 Route::resource('play-surveys', PlaySurveyController::class);
+
+Route::get('teste', function() {
+
+});
 
 Route::any('{any}', function () {
     return view('home');

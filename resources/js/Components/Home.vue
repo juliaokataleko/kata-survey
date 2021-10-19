@@ -49,7 +49,7 @@
       <div class="card-body">
         
         <p class="text-primary">
-          <a :href="linkFull + '/surveys/play/' + survey.uuid">
+          <a target="_blank" :href="linkFull + '/surveys/play/' + survey.uuid">
           {{ linkFull + '/surveys/play/' + survey.uuid }}
           </a>
         </p>
