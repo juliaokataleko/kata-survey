@@ -6,7 +6,7 @@
     </div>
 
     <div class="form-group">
-      <h4>Opções</h4>
+      <h5>Opções</h5>
       <hr />
       <div
         class="d-flex justify-content-between align-items-center mb-2 cursor-pointer"

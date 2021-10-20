@@ -16,12 +16,10 @@ class SurveyOptionResource extends JsonResource
     public function toArray($request)
     {
         // survey answers
-        $survey_answers = Answer::where('user_id', auth()->id())
-            ->where('survey_id', $this->survey_id)
+        $survey_answers = Answer::where('survey_id', $this->survey_id)
             ->get();
 
-        $percents = Answer::where('user_id', auth()->id())
-            ->where('survey_id', $this->survey_id)
+        $percents = Answer::where('survey_id', $this->survey_id)
             ->where('option_id', $this->id)
             ->get();
 
@@ -36,7 +34,7 @@ class SurveyOptionResource extends JsonResource
             'id' => $this->id,
             'uuid' => $this->uuid,
             'title' => $this->title,
-            'percent' => (float) $percent,
+            'percent' => $percent,
             'votes' => count($percents),
             'total_votes' => count($survey_answers),
         ];

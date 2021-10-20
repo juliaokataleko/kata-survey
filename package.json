@@ -25,6 +25,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.4",
         "vue-progressbar": "^0.7.5",
         "vue-router": "^3.5.2"
     }

@@ -14,15 +14,8 @@ class SurveyResource extends JsonResource
      */
     public function toArray($request)
     {
-        $options = SurveyOptionResource::collection($this->survey_options)->sortBy('percent');
 
-        // $result = array_map(function ($object) {
-        //     return (array) $object;
-        // }, $options);
-
-        // usort($result, function ($a, $b) {
-        //     return $a['percent'] <=> $b['percent'];
-        // });
+        $options = SurveyOptionResource::collection($this->survey_options);
 
         return [
             'id' => $this->id,

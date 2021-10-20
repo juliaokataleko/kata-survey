@@ -18,7 +18,7 @@ class CreateSurveysTable extends Migration
             $table->uuid('uuid');
             $table->unsignedBigInteger('user_id');
             $table->string('title');
-            $table->text('about');
+            $table->text('about')->nullable();
             $table->boolean('status')->default(1);
             $table->softDeletes();
             $table->timestamps();

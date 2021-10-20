@@ -20,12 +20,14 @@ class SurveyController extends Controller
     public function index()
     {
         $query = Survey::query();
-        $surveys = $query->where('user_id', 
-        auth()->id())
-        ->orderBy('id', 'desc')
-        ->get();
+        $surveys = $query->where(
+            'user_id',
+            auth()->id()
+        )
+            ->orderBy('id', 'desc')
+            ->get();
+
         return SurveyResource::collection($surveys);
-        return response()->json($surveys);
     }
 
     /**
@@ -48,7 +50,7 @@ class SurveyController extends Controller
     {
         $data = $request->validate([
             'title' => 'required',
-            'about' => 'required'
+            'about' => ''
         ]);
 
         $data['user_id'] = auth()->id();
@@ -58,15 +60,17 @@ class SurveyController extends Controller
         $survey = Survey::create($data);
 
         $options = $request->options;
-        
+
         foreach ($options as $key => $option) {
-            $option['user_id'] = auth()->id();
-            $option['survey_id'] = $survey->id;
-            $option['uuid'] = Uuid::uuid4();
 
-            // save the option
-            $option = SurveyOption::create($option);
+            if (isset($option['title']) && !empty($option['title'])) {
+                $option['user_id'] = auth()->id();
+                $option['survey_id'] = $survey->id;
+                $option['uuid'] = Uuid::uuid4();
 
+                // save the option
+                $option = SurveyOption::create($option);
+            }
         }
     }
 
@@ -104,7 +108,7 @@ class SurveyController extends Controller
     {
         $data = $request->validate([
             'title' => 'required',
-            'about' => 'required'
+            'about' => ''
         ]);
 
         // create survey
@@ -114,22 +118,23 @@ class SurveyController extends Controller
 
         foreach ($options as $key => $option) {
 
-            if(isset($option['id']) AND $option['id']) {
-                $dataOption['user_id'] = auth()->id();
-                $dataOption['survey_id'] = $survey->id;
-                $dataOption['title'] = $option['title'];
-                $option = SurveyOption::find($option['id']);
-                $option->update($dataOption);
-            } else {
-                $dataOption['user_id'] = auth()->id();
-                $dataOption['survey_id'] = $survey->id;
-                $dataOption['user_id'] = auth()->id();
-                $dataOption['uuid'] = Uuid::uuid4();
-                $dataOption['title'] = $option['title'];
-                $dataOption['number'] = $option['number'];
-                $option = SurveyOption::create($dataOption);
+            if (isset($option['title']) && !empty($option['title'])) {
+                if (isset($option['id']) and $option['id']) {
+                    $dataOption['user_id'] = auth()->id();
+                    $dataOption['survey_id'] = $survey->id;
+                    $dataOption['title'] = $option['title'];
+                    $option = SurveyOption::find($option['id']);
+                    $option->update($dataOption);
+                } else {
+                    $dataOption['user_id'] = auth()->id();
+                    $dataOption['survey_id'] = $survey->id;
+                    $dataOption['user_id'] = auth()->id();
+                    $dataOption['uuid'] = Uuid::uuid4();
+                    $dataOption['title'] = $option['title'];
+                    $dataOption['number'] = $option['number'];
+                    $option = SurveyOption::create($dataOption);
+                }
             }
-
         }
     }
 
@@ -142,7 +147,7 @@ class SurveyController extends Controller
     public function destroy($id)
     {
         $survey = Survey::where('id', $id)->where('user_id', auth()->id())->first();
-        if(!is_null($survey)) $survey->delete();
+        if (!is_null($survey)) $survey->delete();
         return response()->json(['message' => 'Enquete excluída']);
     }
 }

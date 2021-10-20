@@ -10,13 +10,15 @@
           align-items-center
         "
       >
-        <h1>{{ title }}</h1>
-        <router-link class="btn btn-primary" :to="{ name: 'Home' }"
-          >Voltar</router-link
+        <h5>{{ title }}</h5>
+        <router-link class="btn btn-primary" :to="{ name: 'Home' }">
+          <i class="fa fa-arrow-left"></i> Voltar</router-link
         >
       </div>
       <div class="card-body">
-        <div class="alert alert-success" v-if="loading">Carregando...</div>
+        <div class="alert alert-success" v-if="loading">
+          <i class="fas fa-circle-notch fa-spin"></i> Carregando
+        </div>
         <form @submit.prevent="saveSurvey()">
           <div class="form-group">
             <label for="title">Título</label>
@@ -170,25 +172,46 @@ export default {
         });
     },
     deleteOption(option) {
-      if (confirm("Tens certeza?")) {
-        console.log(option);
-        this.loading = true;
+      if (
+        option.title == "" ||
+        option.title == undefined ||
+        option.title == null
+      ) {
         this.form.options = this.arrayRemove(this.form.options, option);
 
         // if has id, delete in DB
         if (typeof option.id !== "undefined") {
           axios
-        .delete("/survey-options/" + option.id)
-        .then((res) => {
-          alrt("Opção deletada.")
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+            .delete("/survey-options/" + option.id)
+            .then((res) => {
+              alrt("Opção deletada.");
+              console.log(res);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }
+      } else {
+        if (confirm("Tens certeza?")) {
+          console.log(option);
+          this.loading = true;
+          this.form.options = this.arrayRemove(this.form.options, option);
 
-        this.loading = false;
+          // if has id, delete in DB
+          if (typeof option.id !== "undefined") {
+            axios
+              .delete("/survey-options/" + option.id)
+              .then((res) => {
+                alrt("Opção deletada.");
+                console.log(res);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+
+          this.loading = false;
+        }
       }
     },
     arrayRemove(arr, value) {

@@ -10,7 +10,7 @@
           align-items-center
         "
       >
-        <h1>{{ form.title }}</h1>
+        <h5>{{ form.title }}</h5>
       </div>
       <div class="card-body">
         <div class="alert alert-success" v-if="loading">Carregando...</div>
