@@ -77,8 +77,8 @@ export default {
       title: "Minhas enquetes",
       surveys: {},
       loading: false,
-      linkFull: "http://localhost:8000",
-      // linkFull: "https://appkata.windmot.com"
+      // linkFull: "http://localhost:8000",
+      linkFull: "https://appkata.windmot.com"
     };
   },
   created() {
